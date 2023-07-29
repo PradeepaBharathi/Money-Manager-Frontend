@@ -9,7 +9,7 @@ import Button from '../Button/Button';
 
 
 function Form() {
-    const {addIncome,  error} = useGlobalContext()
+    const {addIncome,getIncomes,  error} = useGlobalContext()
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -28,6 +28,7 @@ function Form() {
     const handleSubmit = e => {
         e.preventDefault()
         addIncome(inputState)
+        getIncomes()
         setInputState({
             title: '',
             amount: '',
@@ -51,7 +52,7 @@ function Form() {
             </div>
             <div className="input-control">
                 <input value={amount}  
-                    type="text" 
+                    type="number" 
                     name={'amount'} 
                     placeholder={'Salary Amount'}
                     onChange={handleInput('amount')} 
@@ -72,13 +73,13 @@ function Form() {
                 <select required value={category} name="category" id="category" onChange={handleInput('category')}>
                     <option value=""  disabled >Select Option</option>
                     <option value="salary">Salary</option>
-                    <option value="investments">Investiments</option>
+                    <option value="investments">Investments</option>
                     <option value="bank">Bank Transfer</option>  
                     <option value="other">Other</option>  
                 </select>
             </div>
             <div className="input-control">
-                <textarea name="description" value={description} placeholder='Add A Reference' id="description" cols="30" rows="4" onChange={handleInput('description')}></textarea>
+                <textarea name="description" value={description} placeholder='Add A Reference' id="description" onChange={handleInput('description')}></textarea>
             </div>
             <div className="submit-btn">
                 <Button
@@ -116,8 +117,6 @@ const FormStyled = styled.form`
         }
     }
     .input-control{
-        display: flex;
-        justify-content: flex-start;
         input{
             width: 100%;
         }
@@ -125,8 +124,7 @@ const FormStyled = styled.form`
 
     .selects{
         display: flex;
-        justify-content: flex-start;
-        width:100%;
+        justify-content: flex-end;
         select{
             color: rgba(34, 34, 96, 0.4);
             &:focus, &:active{
