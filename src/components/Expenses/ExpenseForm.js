@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import DatePicker from 'react-datepicker'
-import "react-datepicker/dist/react-datepicker.css";
+
 import { useGlobalContext } from '../../context/globalContext';
 import Button from '../Button/Button';
 import { plus } from '../../utils/icons';
 
 
 function ExpenseForm() {
-    const {addExpense, error, setError} = useGlobalContext()
+    const {addExpense, error} = useGlobalContext()
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -57,14 +56,12 @@ function ExpenseForm() {
                 />
             </div>
             <div className="input-control">
-                <DatePicker 
-                    id='date'
-                    placeholderText='Enter A Date'
-                    selected={date}
-                    dateFormat="dd/MM/yyyy"
-                    onChange={(date) => {
-                        setInputState({...inputState, date: date})
-                    }}
+                 
+                <input value={date}
+                    type="date"
+                    name={"date"}
+                    placeholder={"enter a date"}
+                    onChange={handleInput('date')} 
                 />
             </div>
             <div className="selects input-control">
