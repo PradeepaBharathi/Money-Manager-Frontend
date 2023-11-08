@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
-// const BASE_URL = "https://money-manager-orxh.onrender.com";
-const BASE_URL = "http://localhost:9000"
+const BASE_URL = "https://money-manager-orxh.onrender.com";
+// const BASE_URL = "http://localhost:9000"
 const GlobalContext = React.createContext();
 
 export const GlobalProvider = ({ children }) => {
