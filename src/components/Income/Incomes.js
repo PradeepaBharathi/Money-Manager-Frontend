@@ -1,49 +1,66 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context/globalContext';
 import { InnerLayout } from '../../styles/layouts';
 import Form from '../Form/Form';
 import IncomeItem from '../IncomeItem/IncomeItem';
 
-
+import Navigation from '../Navigation/Navigation';
 function Income() {
     const {incomes,getIncomes,deleteIncome,totalIncome} = useGlobalContext()
-
+     
     useEffect(() =>{
         getIncomes()
     },[] )
     return (
+      <div>
+       
         <IncomeStyled>
-            <InnerLayout>
-                <h2>Incomes</h2>
-                <h4 className='total-income'>  Total Income: <span>${totalIncome()}</span> </h4>
-                <div className="income-content">
-                    <div className="form-container">
-                        <Form />
-                    </div>
-                    <div className="incomes">
-                        {incomes && incomes instanceof Array && incomes.map((income)=>{
-                            const{_id,title,amount,date,category,description,type}= income;
-                            console.log(income)
-                            return<IncomeItem
-                            key={_id}
-                                id={_id} 
-                                title={title} 
-                                description={description} 
-                                amount={amount} 
-                                date={date} 
-                                category={category} 
-                                type={type}
-                                indicatorColor="var(--color-green)"
-                                deleteItem={deleteIncome}
-
-                            />
-                        })}
-                    </div>
-                </div>
-            </InnerLayout>
+          <InnerLayout>
+            <h2>Incomes</h2>
+            <h4 className="total-income">
+              {" "}
+              Total Income: <span>${totalIncome()}</span>{" "}
+            </h4>
+            <div className="income-content">
+              <div className="form-container">
+                <Form />
+              </div>
+              <div className="incomes">
+                {incomes &&
+                  incomes instanceof Array &&
+                  incomes.map((income) => {
+                    const {
+                      _id,
+                      title,
+                      amount,
+                      date,
+                      category,
+                      description,
+                      type,
+                    } = income;
+                    console.log(income);
+                    return (
+                      <IncomeItem
+                        key={_id}
+                        id={_id}
+                        title={title}
+                        description={description}
+                        amount={amount}
+                        date={date}
+                        category={category}
+                        type={type}
+                        indicatorColor="var(--color-green)"
+                        deleteItem={deleteIncome}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+          </InnerLayout>
         </IncomeStyled>
-    )
+      </div>
+    );
 }
 
 const IncomeStyled = styled.div`

@@ -1,15 +1,52 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
-const BASE_URL = "https://money-manager-orxh.onrender.com";
-
+// const BASE_URL = "https://money-manager-orxh.onrender.com";
+const BASE_URL = "http://localhost:9000"
 const GlobalContext = React.createContext();
 
 export const GlobalProvider = ({ children }) => {
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [error, setError] = useState(null);
+  const [signupUser, setSignupUser] = useState(null);
+  const [details, setDetails] = useState({ Email: "", Name: "" });
 
+  ///////////login and register
+
+  const addUser = async (Name, Email, Password) => {
+    try {
+      console.log("Name:", Name, "Email:", Email, "Password:", Password);
+      const response = await axios.post(`${BASE_URL}/user/add-user`, {
+        Name,
+        Email,
+        Password,
+      });
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const loginUserid = async (id, Email, Password) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/user/login`, {
+        Email,
+        Password,
+      });
+      console.log(response.data)
+      if (response.status === 200) {
+        return response;
+      } else {
+        throw new Error("An error occurred while logging in.");
+      }
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        throw new Error("Incorrect email or password.");
+      } else {
+        throw new Error("An error occurred while logging in.");
+      }
+    }
+  };
   //calculate incomes
   const addIncome = async (income) => {
     try {
@@ -100,6 +137,12 @@ export const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
+        signupUser,
+        setSignupUser,
+        addUser,
+        loginUserid,
+        details,
+        setDetails,
         addIncome,
         getIncomes,
         incomes,

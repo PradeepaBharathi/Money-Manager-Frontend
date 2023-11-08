@@ -1,0 +1,86 @@
+.account-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+       text-align: center;
+        margin-left: 30%;
+}
+h1{
+    margin-left: 30%;
+}
+.image{
+    width: 350px;
+    margin-top: 64px;
+    margin-left: 30%;
+   /* margin: auto; */
+   border-radius: 5px;
+   box-shadow: 5px 2px 5px 2px rgb(0,0,0,0.5);
+   
+}
+
+
+
+.details{
+    padding: 25px 35px;
+    display: flex;
+    flex-direction: column;
+    
+}
+#filled-basic{
+    margin-top: 15px;  
+}
+.no-hover:hover {
+    background-color: transparent;
+    
+}
+#login-button{
+    margin-top: 15px;
+    text-transform: none;
+    background:rosybrown;
+    color: black;
+    height: 48px;
+    border-radius: 2px;
+    font-size: large;
+}
+#sign-up {
+    margin-top: 15px;
+    text-transform: none;
+    color: #2874f0;
+    border-color:white;
+    box-shadow: 2px 4px rgba(0,0,0,0.4);
+    height: 48px;
+    border-radius: 2px;
+    font-size: large;
+
+}
+#text{
+    margin-top: 15px;
+    color: #878787;
+    font-size: 16px;
+    text-align: center;
+
+}
+
+
+img{
+    width: 100px;
+    margin: auto;
+    display: flex;
+    padding-top: 10px;
+}
+
+@media screen and (max-width:600px) {
+    .image{
+        width:250px;
+        height:70vh;
+       margin :auto
+    }
+    .account-container{
+       margin-left: 0px;
+    }
+    h1{
+        margin:auto;
+        margin-bottom: 20px;
+    }
+}
