@@ -9,6 +9,8 @@ function Navigation({active, setActive}) {
   const navigate = useNavigate()
   function handleSignout() {
     navigate('/')
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
   }
     return (
       <NavStyled>

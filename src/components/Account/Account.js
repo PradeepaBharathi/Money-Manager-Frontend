@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Box, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import "./account.css"
 import { useGlobalContext } from "../../context/globalContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 function Account() {
   const { addUser, loginUserid, setDetails, signupUser, setSignupUser } =
     useGlobalContext();
@@ -56,10 +57,11 @@ function Account() {
         setError("Incorrect email or password.");
       } else {
         setError("An error occurred. Please try again later.");
+        console.log(err)
       }
     }
   };
-
+ 
   return (
     <div className="account-container">
     <h1>My Money</h1>

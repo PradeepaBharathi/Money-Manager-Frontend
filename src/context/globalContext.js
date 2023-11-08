@@ -32,9 +32,10 @@ export const GlobalProvider = ({ children }) => {
       const response = await axios.post(`${BASE_URL}/user/login`, {
         Email,
         Password,
+       
       });
       console.log(response.data)
-      if (response.status === 200) {
+      if (response.status ===201) {
         return response;
       } else {
         throw new Error("An error occurred while logging in.");
@@ -43,7 +44,9 @@ export const GlobalProvider = ({ children }) => {
       if (err.response && err.response.status === 401) {
         throw new Error("Incorrect email or password.");
       } else {
+        console.log(err);
         throw new Error("An error occurred while logging in.");
+        
       }
     }
   };
@@ -52,7 +55,7 @@ export const GlobalProvider = ({ children }) => {
     try {
       const response = await axios.post(
         `${BASE_URL}/moneytracker/add-income`,
-        income
+       { income,type:"income"}
       );
       console.log(response.data);
     } catch (err) {
@@ -63,7 +66,10 @@ export const GlobalProvider = ({ children }) => {
 
   const getIncomes = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/moneytracker/all`);
+      const response = await axios.get(`${BASE_URL}/moneytracker/all`,
+        {headers: {
+        "x-auth-token":localStorage.getItem("token")
+      }});
       setIncomes(response.data.data);
       console.log(response.data);
     } catch (error) {
@@ -90,7 +96,11 @@ export const GlobalProvider = ({ children }) => {
     try {
       const response = await axios.post(
         `${BASE_URL}/expensetracker/add-expense`,
-        { ...income, type: "expense" }
+        {
+          ...income,
+          type: "expense",
+        },
+        
       );
     } catch (err) {
       console.log(err);
@@ -100,7 +110,11 @@ export const GlobalProvider = ({ children }) => {
 
   const getExpense = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/expensetracker/all`);
+      const response = await axios.get(`${BASE_URL}/expensetracker/all`, {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      });
       setExpenses(response.data.data);
       console.log(response.data);
     } catch (error) {
