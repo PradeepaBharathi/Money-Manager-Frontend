@@ -20,7 +20,9 @@ function Form() {
     const { title, amount, date, category,description } = inputState;
 
     const handleInput = name => e => {
-        setInputState({...inputState, [name]: e.target.value})
+        const value =
+          name === "amount" ? parseFloat(e.target.value) : e.target.value;
+        setInputState({...inputState, [name]: value})
         // setError('')
     }
 

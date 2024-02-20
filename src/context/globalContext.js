@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 const BASE_URL = "https://money-manager-orxh.onrender.com";
-// const BASE_URL = "http://localhost:9000"
+// const BASE_URL = "http://localhost:9000";
 const GlobalContext = React.createContext();
 
 export const GlobalProvider = ({ children }) => {
@@ -32,10 +32,9 @@ export const GlobalProvider = ({ children }) => {
       const response = await axios.post(`${BASE_URL}/user/login`, {
         Email,
         Password,
-       
       });
-      console.log(response.data)
-      if (response.status ===201) {
+      console.log(response.data);
+      if (response.status === 201) {
         return response;
       } else {
         throw new Error("An error occurred while logging in.");
@@ -46,7 +45,6 @@ export const GlobalProvider = ({ children }) => {
       } else {
         console.log(err);
         throw new Error("An error occurred while logging in.");
-        
       }
     }
   };
@@ -55,7 +53,12 @@ export const GlobalProvider = ({ children }) => {
     try {
       const response = await axios.post(
         `${BASE_URL}/moneytracker/add-income`,
-       { income,type:"income"}
+        { income, type: "income" },
+        {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        }
       );
       console.log(response.data);
     } catch (err) {
@@ -66,30 +69,33 @@ export const GlobalProvider = ({ children }) => {
 
   const getIncomes = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/moneytracker/all`,
-        {headers: {
-        "x-auth-token":localStorage.getItem("token")
-      }});
+      const response = await axios.get(`${BASE_URL}/moneytracker/all`, {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      });
       setIncomes(response.data.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   const deleteIncome = async (id) => {
-    const res = await axios.delete(`${BASE_URL}/moneytracker/delete/${id}`);
+    const res = await axios.delete(`${BASE_URL}/moneytracker/delete/${id}`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    });
     getIncomes();
   };
 
   const totalIncome = () => {
     let totalIncome = 0;
     incomes.forEach((income) => {
-      totalIncome = totalIncome + parseInt(income.amount);
+      totalIncome = totalIncome + parseInt(income.income.amount);
     });
     return totalIncome;
   };
-  console.log(totalIncome());
 
   //calculate expenses
   const addExpense = async (income) => {
@@ -99,8 +105,9 @@ export const GlobalProvider = ({ children }) => {
         {
           ...income,
           type: "expense",
-        },
-        
+        }, {headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },}
       );
     } catch (err) {
       console.log(err);
@@ -123,7 +130,11 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const deleteExpense = async (id) => {
-    const res = await axios.delete(`${BASE_URL}/expensetracker/delete/${id}`);
+    const res = await axios.delete(`${BASE_URL}/expensetracker/delete/${id}`, {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    });
     getExpense();
   };
 
@@ -134,7 +145,6 @@ export const GlobalProvider = ({ children }) => {
     });
     return totalExpense;
   };
-  console.log(totalExpense());
 
   const totalBalance = () => {
     return totalIncome() - totalExpense();

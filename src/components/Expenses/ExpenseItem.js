@@ -21,10 +21,8 @@ import Button from "../Button/Button";
 import { styled } from "styled-components";
 import { dateFormat } from "../../utils/dateFormat";
 
-function IncomeItem({ id, income, deleteItem, indicateColor, type }) {
-  const { title, description,  date, category } =
-    income && income.income ? income.income : {};
-  const amount = parseFloat(income && income.income && income.income.amount);
+function ExpenseItem({ id, income, deleteItem, indicateColor, type }) {
+  const { title, description, date, category, amount } = income;
   const categoryIcon = () => {
     switch (category) {
       case "salary":
@@ -87,7 +85,7 @@ function IncomeItem({ id, income, deleteItem, indicateColor, type }) {
               icon={trash}
               bPad={"1rem"}
               bRad={"50%"}
-              bg={"var(--primary-color"}
+              bg={"var(--primary-color)"}
               color={"#fff"}
               icolor={"#fff"}
               hcolor={"var(--color-green)"}
@@ -170,4 +168,4 @@ const IncomeItemStyled = styled.div`
   }
 `;
 
-export default IncomeItem;
+export default ExpenseItem;
