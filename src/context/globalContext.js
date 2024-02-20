@@ -74,8 +74,11 @@ export const GlobalProvider = ({ children }) => {
           "x-auth-token": localStorage.getItem("token"),
         },
       });
-
-      const incomesData = response.data.data.map((item) => item.income);
+     
+   const incomesData = response.data.data.map((item) => ({
+     income: item.income,
+     id: item._id,
+   }));
       console.log(incomesData);
       setIncomes(incomesData);
       
@@ -96,7 +99,7 @@ export const GlobalProvider = ({ children }) => {
   const totalIncome = () => {
     let totalIncome = 0;
     incomes.forEach((income) => {
-      totalIncome = totalIncome + parseInt(income.amount);
+      totalIncome = totalIncome + parseInt(income.income.amount);
     });
     return totalIncome;
   };
