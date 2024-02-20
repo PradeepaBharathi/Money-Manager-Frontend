@@ -159,7 +159,8 @@ export const GlobalProvider = ({ children }) => {
     return totalIncome() - totalExpense();
   };
   const transactionHistory = () => {
-    const history = [...incomes, ...expenses];
+    const incomeObjects = incomes.map((item) => item.income);
+    const history = [...incomeObjects, ...expenses];
     console.log(history);
     history.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
