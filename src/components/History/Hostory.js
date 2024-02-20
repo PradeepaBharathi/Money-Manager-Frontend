@@ -5,8 +5,8 @@ import { useGlobalContext } from '../../context/globalContext'
 function Hostory() {
     const {transactionHistory} = useGlobalContext()
 
-    const [...history] = transactionHistory()
-
+    const history = transactionHistory()
+    console.log(history)
     return (
         <HistoryStyled>
             <h2>Recent History</h2>

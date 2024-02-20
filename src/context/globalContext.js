@@ -13,7 +13,7 @@ export const GlobalProvider = ({ children }) => {
   const [details, setDetails] = useState({ Email: "", Name: "" });
 
   ///////////login and register
-
+  console.log(incomes);
   const addUser = async (Name, Email, Password) => {
     try {
       console.log("Name:", Name, "Email:", Email, "Password:", Password);
@@ -60,7 +60,7 @@ export const GlobalProvider = ({ children }) => {
           },
         }
       );
-      console.log(response.data);
+      console.log(response.data.income);
     } catch (err) {
       console.log(err);
     }
@@ -74,12 +74,16 @@ export const GlobalProvider = ({ children }) => {
           "x-auth-token": localStorage.getItem("token"),
         },
       });
-      setIncomes(response.data.data);
+
+      const incomesData = response.data.data.map((item) => item.income);
+      console.log(incomesData);
+      setIncomes(incomesData);
+      
     } catch (error) {
       console.log(error);
     }
   };
-
+  console.log(incomes);
   const deleteIncome = async (id) => {
     const res = await axios.delete(`${BASE_URL}/moneytracker/delete/${id}`, {
       headers: {
@@ -92,7 +96,7 @@ export const GlobalProvider = ({ children }) => {
   const totalIncome = () => {
     let totalIncome = 0;
     incomes.forEach((income) => {
-      totalIncome = totalIncome + parseInt(income.income.amount);
+      totalIncome = totalIncome + parseInt(income.amount);
     });
     return totalIncome;
   };
@@ -105,9 +109,12 @@ export const GlobalProvider = ({ children }) => {
         {
           ...income,
           type: "expense",
-        }, {headers: {
-        "x-auth-token": localStorage.getItem("token"),
-      },}
+        },
+        {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        }
       );
     } catch (err) {
       console.log(err);
@@ -123,7 +130,6 @@ export const GlobalProvider = ({ children }) => {
         },
       });
       setExpenses(response.data.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -151,6 +157,7 @@ export const GlobalProvider = ({ children }) => {
   };
   const transactionHistory = () => {
     const history = [...incomes, ...expenses];
+    console.log(history);
     history.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
