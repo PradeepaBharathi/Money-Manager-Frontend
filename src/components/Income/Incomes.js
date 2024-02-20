@@ -43,6 +43,7 @@ function Income() {
                     return (
                       <IncomeItem
                         key={_id}
+                        id={_id}
                         income={income}
                         indicatorColor="var(--color-green)"
                         deleteItem={deleteIncome}
